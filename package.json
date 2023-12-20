@@ -11,6 +11,7 @@
         "coverage": "vitest run --coverage"
     },
     "dependencies": {
+        "pinia": "^2.1.7",
         "vue": "^3.3.11"
     },
     "devDependencies": {
