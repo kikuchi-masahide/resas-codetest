@@ -5,7 +5,6 @@ import MockInputAdapter from "./mock-input-adapter";
 
 export default function instantiateInputAdapter(): DataInputInterface {
     const type = getInputAdapterType();
-    console.log(type);
     switch (type) {
         case "resas":
             return new RESASInputAdapter();

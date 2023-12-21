@@ -23,7 +23,7 @@ interface PopulationCompositionPerYearResponse {
                 value: number;
             }>;
         }>;
-    };
+    } | null;
 }
 
 export default class RESASInputAdapter implements DataInputInterface {
@@ -41,6 +41,9 @@ export default class RESASInputAdapter implements DataInputInterface {
         const response = await this.get<PopulationCompositionPerYearResponse>(
             `api/v1/population/composition/perYear?prefCode=${prefectureCode}&cityCode=-`,
         );
+        if (response.result === null) {
+            throw new Error("Invalid prefecture code");
+        }
         const totalPopulation = new Map<number, PopulationData>();
         const youngPopulation = new Map<number, PopulationData>();
         const workingPopulation = new Map<number, PopulationData>();
@@ -86,6 +89,9 @@ export default class RESASInputAdapter implements DataInputInterface {
             headers,
             mode: "cors",
         });
+        if (!response.ok) {
+            throw new Error("Failed to fetch");
+        }
         return (await response.json()) as T;
     }
 }
