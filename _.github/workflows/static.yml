@@ -37,6 +37,7 @@ jobs:
             - name: Checkout
               uses: actions/checkout@v3
             - name: build
+              env: VITE_RESAS_API_KEY=${{ secrets.RESAS_API_KEY }}
               run: |
                   npm install
                   npm run build -base=https://${{ env.GITHUB_REPOSITORY_OWNER }}.github.io/${{ env.GITHUB_REPOSITORY_NAME }}/
