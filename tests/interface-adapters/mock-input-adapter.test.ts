@@ -25,7 +25,7 @@ describe("MockInputAdapter", () => {
             Promise<PrefectureData>,
         );
     });
-    it("should return prefecture data", () => {
+    it("should return prefecture data", async () => {
         const adapter = instantiateInputAdapter();
         // adapter.getPrefectureData()がエラーにならないことを確認
         expect(async () => await adapter.getPrefectureData(1)).not.toThrow();
@@ -33,6 +33,36 @@ describe("MockInputAdapter", () => {
         expect(adapter.getPrefectureData(1)).toBeInstanceOf(
             Promise<PrefectureData>,
         );
+        const prefectureData = await adapter.getPrefectureData(1);
+        // 各年度のデータについて、実測値/予測値の種別が正しいことを確認
+        prefectureData.totalPopulation.forEach((data, key) => {
+            if (key <= 2023) {
+                expect(data.type).toBe("actual");
+            } else {
+                expect(data.type).toBe("estimate");
+            }
+        });
+        prefectureData.youngPopulation.forEach((data, key) => {
+            if (key <= 2023) {
+                expect(data.type).toBe("actual");
+            } else {
+                expect(data.type).toBe("estimate");
+            }
+        });
+        prefectureData.workingPopulation.forEach((data, key) => {
+            if (key <= 2023) {
+                expect(data.type).toBe("actual");
+            } else {
+                expect(data.type).toBe("estimate");
+            }
+        });
+        prefectureData.elderlyPopulation.forEach((data, key) => {
+            if (key <= 2023) {
+                expect(data.type).toBe("actual");
+            } else {
+                expect(data.type).toBe("estimate");
+            }
+        });
     });
     it("should throw error", async () => {
         const adapter = instantiateInputAdapter();
