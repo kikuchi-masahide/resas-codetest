@@ -1,16 +1,14 @@
-<script setup lang="ts">
-import { computed } from "vue";
-import { sum } from "./sum";
-import { useStore } from "./store/store";
-
-const comp = computed(() => sum(1, 2));
-const store = useStore();
-</script>
-
 <template>
-    1+2={{ comp }}<br />
-    store.count={{ store.count }}<br />
-    <button @click="store.increment">increment</button>
+    <graphPage />
 </template>
+
+<script setup lang="ts">
+import graphPage from "./pages/graph-page.vue";
+import useEntityDataStore from "./usecases/entitiy-data-store";
+import instantiateInputAdapter from "./interface-adapters/instantiate-input-adapter";
+
+const store = useEntityDataStore();
+store.setupInputAdapter(instantiateInputAdapter());
+</script>
 
 <style scoped></style>
