@@ -8,18 +8,18 @@ describe("line-graph.vue", () => {
         title: "タイトル0",
         xAxisTitle: "x軸タイトル0",
         yAxisTitle: "y軸タイトル0",
-        xAxisCategories: ["x軸カテゴリ0-0", "x軸カテゴリ0-1"],
+        xAxisCategories: [1, 2],
         yAxisSeries: [
             {
                 name: "y軸シリーズ0-0",
                 color: "#FF0000",
                 data: [
                     {
-                        x: "x軸カテゴリ0-0",
+                        x: 1,
                         y: 0,
                     },
                     {
-                        x: "x軸カテゴリ0-1",
+                        x: 2,
                         y: 1,
                     },
                 ],
@@ -30,18 +30,18 @@ describe("line-graph.vue", () => {
         title: "タイトル1",
         xAxisTitle: "x軸タイトル1",
         yAxisTitle: "y軸タイトル1",
-        xAxisCategories: ["x軸カテゴリ1-0", "x軸カテゴリ1-1"],
+        xAxisCategories: [1, 2],
         yAxisSeries: [
             {
                 name: "y軸シリーズ1-0",
                 color: "#FF0000",
                 data: [
                     {
-                        x: "x軸カテゴリ1-0",
+                        x: 1,
                         y: 0,
                     },
                     {
-                        x: "x軸カテゴリ1-1",
+                        x: 2,
                         y: 1,
                     },
                 ],
@@ -49,14 +49,14 @@ describe("line-graph.vue", () => {
             {
                 name: "y軸シリーズ1-1",
                 color: "#00FF00",
-                dashStyle: "Dash",
+                dashStyle: "Dash" as "Solid" | "Dash",
                 data: [
                     {
-                        x: "x軸カテゴリ1-0",
+                        x: 1,
                         y: 2,
                     },
                     {
-                        x: "x軸カテゴリ1-1",
+                        x: 2,
                         y: 3,
                     },
                 ],
