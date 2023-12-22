@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
-import instantiateInputAdapter from "../../src/interface-adapters/instantiate-input-adapter";
-import type { PrefectureData } from "../../src/entities/prefecture-data";
-import * as getInputAdapterType from "../../src/interface-adapters/get-input-adapter-type";
+import instantiateInputAdapter from "@/interface-adapters/instantiate-input-adapter";
+import type { PrefectureData } from "@/entities/prefecture-data";
+import * as getInputAdapterType from "@/interface-adapters/get-input-adapter-type";
 
 describe("MockInputAdapter", () => {
     beforeEach(() => {

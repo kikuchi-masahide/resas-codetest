@@ -1,5 +1,5 @@
 import { mount } from "@vue/test-utils";
-import dropDownVue from "../../../src/pages/atoms/drop-down.vue";
+import dropDownVue from "@/pages/atoms/drop-down.vue";
 import { describe, it, expect } from "vitest";
 
 describe("drop-down.vue", () => {

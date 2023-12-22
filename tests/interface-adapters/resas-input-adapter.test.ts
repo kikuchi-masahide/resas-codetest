@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
-import instantiateInputAdapter from "../../src/interface-adapters/instantiate-input-adapter";
-import type { PrefectureData } from "../../src/entities/prefecture-data";
+import instantiateInputAdapter from "@/interface-adapters/instantiate-input-adapter";
+import type { PrefectureData } from "@/entities/prefecture-data";
 
 describe("RESASInputAdapter", () => {
     it("should return prefecture codes", () => {

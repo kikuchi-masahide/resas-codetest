@@ -1,7 +1,7 @@
 import { mount } from "@vue/test-utils";
-import lineGraphVue from "../../../src/pages/atoms/line-graph.vue";
+import lineGraphVue from "@/pages/atoms/line-graph.vue";
 import { describe, it, expect, vi } from "vitest";
-import * as viewmodel from "../../../src/pages/atoms/line-graph-view-model";
+import * as viewmodel from "@/pages/atoms/line-graph-view-model";
 
 describe("line-graph.vue", () => {
     const props0 = {

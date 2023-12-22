@@ -1,5 +1,5 @@
 import { mount } from "@vue/test-utils";
-import checkBoxVue from "../../../src/pages/atoms/check-box.vue";
+import checkBoxVue from "@/pages/atoms/check-box.vue";
 import { describe, it, expect } from "vitest";
 
 describe("check-box.vue", () => {
