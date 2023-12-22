@@ -3,18 +3,25 @@
         <p>都道府県コードを読み込み中です</p>
     </div>
     <div v-else>
-        <ul>
-            <li v-for="prop in checkboxProps" :key="prop.id">
-                <check-box
-                    :id="prop.id"
-                    :group-id="prop.groupId"
-                    :label="prop.label"
-                    @change="
-                        emits('change', emitOnChangeFuncParameter(prop.id))
-                    "
-                />
-            </li>
-        </ul>
+        <table>
+            <tbody>
+                <tr v-for="row in checkboxProps" :key="row.rowIndex">
+                    <td v-for="col in row.cols" :key="col.colIndex">
+                        <check-box
+                            :id="col.data.id"
+                            :group-id="col.data.groupId"
+                            :label="col.data.label"
+                            @change="
+                                emits(
+                                    'change',
+                                    emitOnChangeFuncParameter(col.data.id),
+                                )
+                            "
+                        />
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </template>
 <script setup lang="ts">
