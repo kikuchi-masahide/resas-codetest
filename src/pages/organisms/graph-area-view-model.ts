@@ -29,14 +29,17 @@ const valueTypeDropboxItems = [
 ];
 
 const checkedPrefCodes = ref(new Array<number>());
-const xAxisCategories = ref(new Array<string>());
+// 各都道府県に対応する線の色(checkedPrefCodesに含まれない都道府県がある可能性が有る)
+const lineColors = ref(new Map<number, string>());
+const xAxisCategories = ref(new Array<number>());
 const yAxisSeries = ref(
     new Array<{
         name: string;
+        color: string;
+        dashStyle?: "Solid" | "Dash";
         data: Array<{
-            x: string;
+            x: number;
             y: number;
-            dashStyle?: "Solid" | "Dash";
         }>;
     }>(),
 );
@@ -62,8 +65,6 @@ const onValueTypeChange = (value: number): void => {
 
 // props.checkedPrefCodesをwatchするための関数
 const watchCheckedPrefCodes = async (newValue: number[]): Promise<void> => {
-    console.log("watchCheckedPrefCodes");
-    console.log(newValue);
     checkedPrefCodes.value = newValue;
     await setGraphDatas();
 };
@@ -72,13 +73,14 @@ const watchCheckedPrefCodes = async (newValue: number[]): Promise<void> => {
 async function setGraphDatas(): Promise<void> {
     const store = useEntityDataStore();
     const prefCodes = await store.getPrefectureCodes();
-    const xAxisCategoriesSet = new Set<string>();
+    const xAxisCategoriesSet = new Set<number>();
     const yAxisSeriesArray = new Array<{
         name: string;
+        dashStyle?: "Solid" | "Dash";
+        color: string;
         data: Array<{
-            x: string;
+            x: number;
             y: number;
-            dashStyle?: "Solid" | "Dash";
         }>;
     }>();
 
@@ -103,24 +105,55 @@ async function setGraphDatas(): Promise<void> {
                 populationData = prefData.elderlyPopulation;
                 break;
         }
-        const newSeriesIndex =
-            yAxisSeriesArray.push({
-                name,
-                data: [],
-            }) - 1;
-        for (const [year, data] of populationData) {
-            xAxisCategoriesSet.add(year.toString());
-            yAxisSeriesArray[newSeriesIndex].data.push({
-                x: year.toString(),
-                y: data.value,
-                dashStyle: data.type === "estimate" ? "Dash" : "Solid",
-            });
+        // 年度でソートする
+        const populationDataArray = Array.from(populationData).sort(
+            (a, b) => a[0] - b[0],
+        );
+        // 実線/点線で結ぶデータ
+        const solidSeriesData = new Array<{ x: number; y: number }>();
+        const dashSeriesData = new Array<{ x: number; y: number }>();
+        let prevData = populationDataArray[0];
+        for (const [year, data] of populationDataArray) {
+            xAxisCategoriesSet.add(year);
+            if (data.type === "actual") {
+                solidSeriesData.push({ x: year, y: data.value });
+            } else {
+                // dashSeriesDataの長さが0ならば今のdataが初めての推測値"estimate"
+                // 1つ前のデータも追加する
+                if (dashSeriesData.length === 0) {
+                    dashSeriesData.push({
+                        x: prevData[0],
+                        y: prevData[1].value,
+                    });
+                }
+                dashSeriesData.push({ x: year, y: data.value });
+            }
+            prevData = [year, data];
         }
+        // 線の色を求める
+        let color = lineColors.value.get(code);
+        if (color === undefined) {
+            // 色が決まっていない都道府県に対してランダムに色を設定する
+            color = `#${Math.floor(Math.random() * 0xffffff).toString(16)}`;
+            lineColors.value.set(code, color);
+        }
+        yAxisSeriesArray.push({
+            name,
+            color,
+            data: solidSeriesData,
+        });
+        yAxisSeriesArray.push({
+            name: `${name}(推計)`,
+            dashStyle: "Dash",
+            color,
+            data: dashSeriesData,
+        });
     }
-    xAxisCategories.value = Array.from(xAxisCategoriesSet).sort();
+    // 年度昇順でソート
+    xAxisCategories.value = Array.from(xAxisCategoriesSet).sort(
+        (a, b) => a - b,
+    );
     yAxisSeries.value = yAxisSeriesArray;
-    console.log(xAxisCategories.value);
-    console.log(yAxisSeries.value);
 }
 
 export {

@@ -1,15 +1,16 @@
 export interface PropsType {
     title: string;
     xAxisTitle: string;
-    xAxisCategories: string[];
+    xAxisCategories: number[];
     yAxisTitle: string;
     yAxisSeries: Array<{
         name: string;
+        color: string;
+        // 線の種類(Solid:実線/Dash:点線)
+        dashStyle?: "Solid" | "Dash";
         data: Array<{
-            x: string;
+            x: number;
             y: number;
-            // 直前の点との結び方
-            dashStyle?: "Solid" | "Dash";
         }>;
     }>;
 }
@@ -25,27 +26,34 @@ export interface GraphOptionsType {
         title: {
             text: string;
         };
-        categories: string[];
+        categories: number[];
     };
     yAxis: {
         title: {
             text: string;
         };
     };
-    plotOptions: {
-        line: {
-            dataLabels: {
-                enabled: true;
+    responsive: {
+        rules: Array<{
+            chartOptions: {
+                line: {
+                    dataLabels: {
+                        enabled: boolean;
+                    };
+                    enableMouseTracking: boolean;
+                };
             };
-            enableMouseTracking: false;
-        };
+            condition: {
+                maxWidth?: number;
+                minWidth: number;
+            };
+        }>;
     };
     series: Array<{
         name: string;
-        data: Array<{
-            y: number;
-            dashStyle: "Solid" | "Dash";
-        } | null>;
+        color: string;
+        dashStyle: "Solid" | "Dash";
+        data: Array<[number, number]>; // [x, y]
     }>;
 }
 
@@ -53,42 +61,24 @@ export interface GraphOptionsType {
 export const getGraphOptions = (
     title: string,
     xAxisTitle: string,
-    xAxisCategories: string[],
+    xAxisCategories: number[],
     yAxisTitle: string,
     yAxisSeries: Array<{
         name: string;
+        dashStyle?: "Solid" | "Dash";
+        color: string;
         data: Array<{
-            x: string;
+            x: number;
             y: number;
-            dashStyle?: "Solid" | "Dash";
         }>;
     }>,
 ): GraphOptionsType => {
-    // yAxisSeriesをxAxisCategoriesに合わせて整形する
-    // 配列長をxAxisCategoriesに合わせ、値が抜けている場合はnullとする。
-    const xAxisCategoriesMap = new Map<string, number>();
-    for (const [index, category] of xAxisCategories.entries()) {
-        xAxisCategoriesMap.set(category, index);
-    }
     const series = yAxisSeries.map((series) => {
-        const datas = new Array<{
-            y: number;
-            dashStyle: "Solid" | "Dash";
-        } | null>();
-        datas.fill(null, 0, xAxisCategories.length);
-        for (const data of series.data) {
-            const index = xAxisCategoriesMap.get(data.x);
-            if (index === undefined) {
-                throw new Error("Invalid x-axis category");
-            }
-            datas[index] = {
-                y: data.y,
-                dashStyle: data.dashStyle ?? "Solid",
-            };
-        }
         return {
             name: series.name,
-            data: datas,
+            color: series.color,
+            dashStyle: series.dashStyle ?? "Solid",
+            data: series.data.map<[number, number]>((data) => [data.x, data.y]),
         };
     });
     return {
@@ -109,13 +99,36 @@ export const getGraphOptions = (
                 text: yAxisTitle,
             },
         },
-        plotOptions: {
-            line: {
-                dataLabels: {
-                    enabled: true,
+        responsive: {
+            rules: [
+                {
+                    chartOptions: {
+                        line: {
+                            dataLabels: {
+                                enabled: false,
+                            },
+                            enableMouseTracking: false,
+                        },
+                    },
+                    condition: {
+                        maxWidth: 640,
+                        minWidth: 0,
+                    },
                 },
-                enableMouseTracking: false,
-            },
+                {
+                    chartOptions: {
+                        line: {
+                            dataLabels: {
+                                enabled: true,
+                            },
+                            enableMouseTracking: true,
+                        },
+                    },
+                    condition: {
+                        minWidth: 641,
+                    },
+                },
+            ],
         },
         series,
     };
