@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from "vitest";
-import instantiateInputAdapter from "../../src/interface-adapters/instantiate-input-adapter";
-import * as getInputAdapterType from "../../src/interface-adapters/get-input-adapter-type";
+import instantiateInputAdapter from "@/interface-adapters/instantiate-input-adapter";
+import * as getInputAdapterType from "@/interface-adapters/get-input-adapter-type";
 
 describe("instantiateInputAdapter", () => {
     it("should return a RESAS input adapter", () => {

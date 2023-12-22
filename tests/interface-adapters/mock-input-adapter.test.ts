@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
-import instantiateInputAdapter from "../../src/interface-adapters/instantiate-input-adapter";
-import type { PrefectureData } from "../../src/entities/prefecture-data";
-import * as getInputAdapterType from "../../src/interface-adapters/get-input-adapter-type";
+import instantiateInputAdapter from "@/interface-adapters/instantiate-input-adapter";
+import type { PrefectureData } from "@/entities/prefecture-data";
+import * as getInputAdapterType from "@/interface-adapters/get-input-adapter-type";
 
 describe("MockInputAdapter", () => {
     beforeEach(() => {
@@ -19,7 +19,7 @@ describe("MockInputAdapter", () => {
             Promise<Map<number, string>>,
         );
         // adapter.getPrefectureCodes()がエラーにならないことを確認
-        expect(async () => await adapter.getPrefectureCodes()).not.toThrow();
+        expect(async () => adapter.getPrefectureCodes()).not.toThrow();
         // adapter.getPrefectureCodes()の返り値の内容を確認
         expect(adapter.getPrefectureCodes()).toBeInstanceOf(
             Promise<PrefectureData>,
@@ -28,7 +28,7 @@ describe("MockInputAdapter", () => {
     it("should return prefecture data", async () => {
         const adapter = instantiateInputAdapter();
         // adapter.getPrefectureData()がエラーにならないことを確認
-        expect(async () => await adapter.getPrefectureData(1)).not.toThrow();
+        expect(async () => adapter.getPrefectureData(1)).not.toThrow();
         // adapter.getPrefectureData()の返り値の型を確認
         expect(adapter.getPrefectureData(1)).toBeInstanceOf(
             Promise<PrefectureData>,
