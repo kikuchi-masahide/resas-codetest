@@ -1,10 +1,10 @@
 <template>
+    <label :for="elementId">{{ label }}</label>
     <select :id="elementId" @change="onChange">
         <option v-for="item in items" :key="item.value" :value="item.value">
             {{ item.label }}
         </option>
     </select>
-    <label :for="elementId">{{ label }}</label>
 </template>
 <script setup lang="ts">
 import { defineProps, defineEmits } from "vue";
