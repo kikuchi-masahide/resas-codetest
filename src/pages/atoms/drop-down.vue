@@ -26,3 +26,9 @@ const onChange = (event: Event): void => {
     emits("change", Number((event.target as HTMLInputElement).value));
 };
 </script>
+<style scoped>
+label {
+    font-weight: bold;
+    margin: 0.5em;
+}
+</style>
