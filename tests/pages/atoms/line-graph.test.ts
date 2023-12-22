@@ -12,6 +12,7 @@ describe("line-graph.vue", () => {
         yAxisSeries: [
             {
                 name: "y軸シリーズ0-0",
+                color: "#FF0000",
                 data: [
                     {
                         x: "x軸カテゴリ0-0",
@@ -33,6 +34,7 @@ describe("line-graph.vue", () => {
         yAxisSeries: [
             {
                 name: "y軸シリーズ1-0",
+                color: "#FF0000",
                 data: [
                     {
                         x: "x軸カテゴリ1-0",
@@ -46,6 +48,8 @@ describe("line-graph.vue", () => {
             },
             {
                 name: "y軸シリーズ1-1",
+                color: "#00FF00",
+                dashStyle: "Dash",
                 data: [
                     {
                         x: "x軸カテゴリ1-0",
