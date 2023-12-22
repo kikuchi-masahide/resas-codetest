@@ -1,18 +1,20 @@
-// highchartsのオプションを生成する
-export const getGraphOptions = (
-    title: string,
-    xAxisTitle: string,
-    xAxisCategories: string[],
-    yAxisTitle: string,
+export interface PropsType {
+    title: string;
+    xAxisTitle: string;
+    xAxisCategories: string[];
+    yAxisTitle: string;
     yAxisSeries: Array<{
         name: string;
         data: Array<{
             x: string;
             y: number;
+            // 直前の点との結び方
             dashStyle?: "Solid" | "Dash";
         }>;
-    }>,
-): {
+    }>;
+}
+
+export interface GraphOptionsType {
     chart: {
         type: "line";
     };
@@ -45,7 +47,23 @@ export const getGraphOptions = (
             dashStyle: "Solid" | "Dash";
         } | null>;
     }>;
-} => {
+}
+
+// highchartsのオプションを生成する
+export const getGraphOptions = (
+    title: string,
+    xAxisTitle: string,
+    xAxisCategories: string[],
+    yAxisTitle: string,
+    yAxisSeries: Array<{
+        name: string;
+        data: Array<{
+            x: string;
+            y: number;
+            dashStyle?: "Solid" | "Dash";
+        }>;
+    }>,
+): GraphOptionsType => {
     // yAxisSeriesをxAxisCategoriesに合わせて整形する
     // 配列長をxAxisCategoriesに合わせ、値が抜けている場合はnullとする。
     const xAxisCategoriesMap = new Map<string, number>();

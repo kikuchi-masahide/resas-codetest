@@ -65,9 +65,9 @@ describe("line-graph.vue", () => {
         const wrapper = mount(lineGraphVue, {
             props: props0,
         });
-        expect(spy).toBeCalledTimes(0);
+        expect(spy).toBeCalledTimes(1);
         // propsを変更
         await wrapper.setProps(props1);
-        expect(spy).toBeCalledTimes(1);
+        expect(spy).toBeCalledTimes(2);
     });
 });
