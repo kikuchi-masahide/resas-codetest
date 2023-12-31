@@ -1,6 +1,9 @@
-import type { PrefectureData } from "../entities/prefecture-data";
+import type {
+    PrefectureData,
+    PrefectureIndexData,
+} from "../entities/prefecture-data";
 
 export default interface DataInputInterface {
-    getPrefectureCodes: () => Promise<Map<number, string>>;
+    getPrefectureIndexDatas: () => Promise<Map<number, PrefectureIndexData>>;
     getPrefectureData: (prefectureCode: number) => Promise<PrefectureData>;
 }

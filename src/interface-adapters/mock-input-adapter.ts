@@ -1,15 +1,43 @@
 import type {
     PopulationData,
     PrefectureData,
+    PrefectureIndexData,
 } from "../entities/prefecture-data";
 import type DataInputInterface from "../usecases/data-input-interface";
 
 export default class MockInputAdapter implements DataInputInterface {
-    async getPrefectureCodes(): Promise<Map<number, string>> {
+    async getPrefectureIndexDatas(): Promise<Map<number, PrefectureIndexData>> {
         return new Map([
-            [1, "都道府県1"],
-            [2, "都道府県2"],
-            [3, "都道府県3"],
+            [
+                1,
+                {
+                    prefCode: 1,
+                    prefName: "都道府県1",
+                    prefNameJP: "トドウフケン1",
+                    areaCode: 1,
+                    areaName: "地域1",
+                },
+            ],
+            [
+                2,
+                {
+                    prefCode: 2,
+                    prefName: "都道府県2",
+                    prefNameJP: "トドウフケン2",
+                    areaCode: 1,
+                    areaName: "地域1",
+                },
+            ],
+            [
+                3,
+                {
+                    prefCode: 3,
+                    prefName: "都道府県3",
+                    prefNameJP: "トドウフケン3",
+                    areaCode: 2,
+                    areaName: "地域2",
+                },
+            ],
         ]);
     }
 
