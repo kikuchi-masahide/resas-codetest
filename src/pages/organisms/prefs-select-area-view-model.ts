@@ -84,7 +84,6 @@ const checkboxPropsNameOrder = computed(() => {
             );
         }
     }
-    console.log(checkboxPropsNameOrderAsc1d.value);
     return res;
 });
 

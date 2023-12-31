@@ -1,12 +1,17 @@
 import { defineStore } from "pinia";
-import type { PrefectureData, PrefectureIndexData } from "../entities/prefecture-data";
+import type {
+    PrefectureData,
+    PrefectureIndexData,
+} from "../entities/prefecture-data";
 import type DataInputInterface from "./data-input-interface";
 
 const useEntityDataStore = defineStore({
     id: "entityDataStore",
     state: () => ({
         _inputAdapter: undefined as undefined | DataInputInterface,
-        _prefectureIndexDatas: undefined as Map<number, PrefectureIndexData> | undefined,
+        _prefectureIndexDatas: undefined as
+            | Map<number, PrefectureIndexData>
+            | undefined,
         _prefectureDatas: new Map<number, PrefectureData>(),
     }),
     actions: {
@@ -16,13 +21,16 @@ const useEntityDataStore = defineStore({
             }
             this._inputAdapter = inputAdapter;
         },
-        async getPrefectureIndexDatas(): Promise<Map<number, PrefectureIndexData>> {
+        async getPrefectureIndexDatas(): Promise<
+            Map<number, PrefectureIndexData>
+        > {
             if (this._inputAdapter === undefined) {
                 throw new Error("Input adapter not found");
             }
             const codes = this._prefectureIndexDatas;
             if (codes === undefined) {
-                this._prefectureIndexDatas = await this._inputAdapter.getPrefectureIndexDatas();
+                this._prefectureIndexDatas =
+                    await this._inputAdapter.getPrefectureIndexDatas();
                 return this._prefectureIndexDatas;
             } else {
                 return codes;
