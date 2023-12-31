@@ -1,5 +1,6 @@
 import { ref } from "vue";
 import useEntityDataStore from "../../usecases/entitiy-data-store";
+import { PrefectureIndexData } from "@/entities/prefecture-data";
 
 // 一行四項目の表としてチェックボックスを表示するため、
 // 一行分のpropsを配列で表現する
@@ -17,26 +18,26 @@ const checkedPrefIds = ref(new Set<number>());
 
 const onMountedFunctor = async (): Promise<void> => {
     const store = useEntityDataStore();
-    const codes = Array.from(await store.getPrefectureCodes());
+    const indexDatas = Array.from(await store.getPrefectureIndexDatas());
     // codesを4つずつに分割する
     const chunkSize = 4;
-    const chunkedCodes = new Array<Array<[number, string]>>();
-    for (let i = 0; i < codes.length; i += chunkSize) {
-        chunkedCodes.push(codes.slice(i, i + chunkSize));
+    const chunkedIndexDatas = new Array<Array<[number, PrefectureIndexData]>>();
+    for (let i = 0; i < indexDatas.length; i += chunkSize) {
+        chunkedIndexDatas.push(indexDatas.slice(i, i + chunkSize));
     }
     checkboxProps.value = [];
-    for (const [rowIndex, row] of chunkedCodes.entries()) {
+    for (const [rowIndex, row] of chunkedIndexDatas.entries()) {
         checkboxProps.value.push({
             rowIndex,
             cols: [],
         });
-        for (const [colIndex, [id, label]] of row.entries()) {
+        for (const [colIndex, [id, indexData]] of row.entries()) {
             checkboxProps.value[rowIndex].cols.push({
                 colIndex,
                 data: {
                     groupId: "pref",
                     id,
-                    label,
+                    label: indexData.prefName,
                 },
             });
         }
