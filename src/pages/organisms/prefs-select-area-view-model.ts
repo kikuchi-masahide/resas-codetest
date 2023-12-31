@@ -2,7 +2,9 @@ import { computed, ref } from "vue";
 import useEntityDataStore from "../../usecases/entitiy-data-store";
 import { PrefectureIndexData } from "@/entities/prefecture-data";
 
-// 都道府県コードソートの際のcheckboxのprops配列
+const isPrefIndexDatasLoadedRef = ref(false);
+const isPrefIndexDatasLoaded = computed(() => isPrefIndexDatasLoadedRef.value);
+
 const checkboxPropsCodeOrder = ref<
     Array<{
         // 地方ごとのデータ
@@ -17,13 +19,77 @@ const checkboxPropsCodeOrder = ref<
             }>
         >;
     }>
->();
+>([]);
+const checkboxPropsNameOrderAsc1d = ref<
+    Array<{
+        groupId: string;
+        id: number;
+        label: string;
+    }>
+>([]);
 
 const checkedPrefIdsSet = ref(new Set<number>());
 // checkboxPropsCodeOrderの更新はタブ切り替え時行われないがcheckBoxVueは更新されるため、
 // checkboxの入力値参照はこちらを用いる
 const isPrefIdCheckedComputed = (id: number): boolean => {
     return computed(() => checkedPrefIdsSet.value.has(id)).value;
+};
+
+const nameSortOrderDropDownProps = {
+    elementId: "name-sort-order",
+    label: "ソート順",
+    items: [
+        {
+            label: "昇順(あ→ん)",
+            value: 0,
+        },
+        {
+            label: "降順(ん→あ)",
+            value: 1,
+        },
+    ],
+};
+
+const nameSortOrderDropDownValueRef = ref(0);
+const nameSortOrderDropDownValue = computed(
+    () => nameSortOrderDropDownValueRef.value,
+);
+
+// ４行の表としてcheck-boxを配置するため、
+// checkboxPropsNameOrder1dを4つずつに分割する
+const checkboxPropsNameOrder = computed(() => {
+    const res = new Array<
+        Array<{
+            groupId: string;
+            id: number;
+            label: string;
+        }>
+    >();
+    const chunkSize = 4;
+    const wholeLen = checkboxPropsNameOrderAsc1d.value.length;
+    for (let rowIndex = 0; rowIndex < wholeLen / chunkSize; rowIndex += 1) {
+        res.push([]);
+        const back = res[rowIndex];
+        for (
+            let index = chunkSize * rowIndex;
+            index < chunkSize * (rowIndex + 1) && index < wholeLen;
+            index++
+        ) {
+            back.push(
+                checkboxPropsNameOrderAsc1d.value[
+                    nameSortOrderDropDownValueRef.value == 0
+                        ? index
+                        : wholeLen - index - 1
+                ],
+            );
+        }
+    }
+    console.log(checkboxPropsNameOrderAsc1d.value);
+    return res;
+});
+
+const nameSortOrderDropDownOnChanged = (value: number): void => {
+    nameSortOrderDropDownValueRef.value = value;
 };
 
 const onMountedFunctor = async (): Promise<void> => {
@@ -67,6 +133,26 @@ const onMountedFunctor = async (): Promise<void> => {
             }
         }
     }
+
+    checkboxPropsNameOrderAsc1d.value = prefIdIndexDatas
+        .sort((a, b) => {
+            if (a[1].prefNameJP < b[1].prefNameJP) {
+                return -1;
+            } else if (a[1].prefNameJP > b[1].prefNameJP) {
+                return 1;
+            } else {
+                return 0;
+            }
+        })
+        .map((data) => {
+            return {
+                groupId: "pref",
+                id: data[0],
+                label: data[1].prefName,
+            };
+        });
+
+    isPrefIndexDatasLoadedRef.value = true;
 };
 
 const tabContainerTabProps = [
@@ -95,8 +181,13 @@ const emitOnChangeFuncParameter = (id: number): number[] => {
 };
 
 export {
+    isPrefIndexDatasLoaded,
     checkboxPropsCodeOrder,
-    isPrefIdChecked,
+    isPrefIdCheckedComputed,
+    nameSortOrderDropDownProps,
+    nameSortOrderDropDownValue,
+    checkboxPropsNameOrder,
+    nameSortOrderDropDownOnChanged,
     onMountedFunctor,
     emitOnChangeFuncParameter,
     tabContainerTabProps,

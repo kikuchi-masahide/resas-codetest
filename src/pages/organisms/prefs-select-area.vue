@@ -1,6 +1,6 @@
 <template>
     <h1>都道府県一覧</h1>
-    <div v-if="viewModel.checkboxPropsCodeOrder === undefined">
+    <div v-if="!viewModel.isPrefIndexDatasLoaded">
         <p>都道府県コードを読み込み中です</p>
     </div>
     <tabContainer v-else :tabProps="viewModel.tabContainerTabProps">
@@ -25,7 +25,11 @@
                                     :id="col.id"
                                     :group-id="col.groupId"
                                     :label="col.label"
-                                    :checked="viewModel.isPrefIdCheckedComputed(col.id)"
+                                    :checked="
+                                        viewModel.isPrefIdCheckedComputed(
+                                            col.id,
+                                        )
+                                    "
                                     @change="
                                         emits(
                                             'change',
@@ -41,12 +45,52 @@
                 </table>
             </template>
         </template>
+        <template v-slot:name-order>
+            <dropDown
+                v-bind="viewModel.nameSortOrderDropDownProps"
+                @change="viewModel.nameSortOrderDropDownOnChanged"
+            />
+            <table>
+                <tbody>
+                    <tr
+                        v-for="[
+                            rowIndex,
+                            row,
+                        ] in viewModel.checkboxPropsNameOrder.value.entries()"
+                        :key="rowIndex"
+                    >
+                        <td
+                            v-for="[colIndex, col] in row.entries()"
+                            :key="colIndex"
+                        >
+                            <check-box
+                                :id="col.id"
+                                :group-id="col.groupId"
+                                :label="col.label"
+                                :checked="
+                                    viewModel.isPrefIdCheckedComputed(col.id)
+                                "
+                                @change="
+                                    emits(
+                                        'change',
+                                        viewModel.emitOnChangeFuncParameter(
+                                            col.id,
+                                        ),
+                                    )
+                                "
+                            />
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </template>
     </tabContainer>
 </template>
 <script setup lang="ts">
 import * as viewModel from "./prefs-select-area-view-model";
 import tabContainer from "../atoms/tab-container.vue";
 import checkBox from "../atoms/check-box.vue";
+import dropDown from "../atoms/drop-down.vue";
 import { onMounted } from "vue";
 
 const emits = defineEmits<{
