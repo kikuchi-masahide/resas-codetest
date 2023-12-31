@@ -5,45 +5,47 @@
     </div>
     <tabContainer v-else :tabProps="viewModel.tabContainerTabProps">
         <template v-slot:code-order>
-            <template
-                v-for="{ areaName, table } in viewModel.checkboxPropsCodeOrder
-                    .value"
-            >
-                <h2>{{ areaName }}</h2>
-                <hr />
-                <table>
-                    <tbody>
-                        <tr
-                            v-for="[rowIndex, row] in table.entries()"
-                            :key="rowIndex"
-                        >
-                            <td
-                                v-for="[colIndex, col] in row.entries()"
-                                :key="colIndex"
+            <div class="code-order-slot">
+                <template
+                    v-for="{ areaName, table } in viewModel
+                        .checkboxPropsCodeOrder.value"
+                >
+                    <h2 class="area-name">{{ areaName }}</h2>
+                    <hr />
+                    <table>
+                        <tbody>
+                            <tr
+                                v-for="[rowIndex, row] in table.entries()"
+                                :key="rowIndex"
                             >
-                                <check-box
-                                    :id="col.id"
-                                    :group-id="col.groupId"
-                                    :label="col.label"
-                                    :checked="
-                                        viewModel.isPrefIdCheckedComputed(
-                                            col.id,
-                                        )
-                                    "
-                                    @change="
-                                        emits(
-                                            'change',
-                                            viewModel.emitOnChangeFuncParameter(
+                                <td
+                                    v-for="[colIndex, col] in row.entries()"
+                                    :key="colIndex"
+                                >
+                                    <check-box
+                                        :id="col.id"
+                                        :group-id="col.groupId"
+                                        :label="col.label"
+                                        :checked="
+                                            viewModel.isPrefIdCheckedComputed(
                                                 col.id,
-                                            ),
-                                        )
-                                    "
-                                />
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </template>
+                                            )
+                                        "
+                                        @change="
+                                            emits(
+                                                'change',
+                                                viewModel.emitOnChangeFuncParameter(
+                                                    col.id,
+                                                ),
+                                            )
+                                        "
+                                    />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </template>
+            </div>
         </template>
         <template v-slot:name-order>
             <dropDown
@@ -105,14 +107,18 @@ onMounted(viewModel.onMountedFunctor);
         text-align: center;
     }
     table {
-        border: 1px solid gray;
-        border-radius: 5px;
-        margin-bottom: 1em;
-        padding: 0.5em;
         width: 100%;
     }
     table tr {
         width: 25%;
+    }
+    .area-name {
+        margin-top: 0em;
+        margin-bottom: 0em;
+    }
+    .code-order-slot {
+        max-height: 400px;
+        overflow-y: scroll;
     }
 }
 
@@ -123,14 +129,19 @@ onMounted(viewModel.onMountedFunctor);
     table {
         margin-left: auto;
         margin-right: auto;
-        margin-bottom: 1em;
         padding: 1em;
         width: 50%;
-        border: 1px solid gray;
-        border-radius: 5px;
     }
     table tr {
         width: 25%;
+    }
+    .area-name {
+        margin-top: 0em;
+        margin-bottom: 0em;
+    }
+    .code-order-slot {
+        max-height: 400px;
+        overflow-y: scroll;
     }
 }
 </style>
