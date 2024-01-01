@@ -33,6 +33,13 @@ export interface GraphOptionsType {
             text: string;
         };
     };
+    plotOptions: {
+        line: {
+            marker: {
+                symbol: "circle";
+            };
+        };
+    };
     responsive: {
         rules: Array<{
             chartOptions: {
@@ -97,6 +104,13 @@ export const getGraphOptions = (
         yAxis: {
             title: {
                 text: yAxisTitle,
+            },
+        },
+        plotOptions: {
+            line: {
+                marker: {
+                    symbol: "circle",
+                },
             },
         },
         responsive: {
