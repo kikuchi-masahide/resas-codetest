@@ -82,6 +82,7 @@ async function setGraphDatas(): Promise<void> {
             x: number;
             y: number;
         }>;
+        showInLegend: boolean;
     }>();
 
     for (const code of checkedPrefCodes.value) {
@@ -141,12 +142,14 @@ async function setGraphDatas(): Promise<void> {
             name: indexData.prefName,
             color,
             data: solidSeriesData,
+            showInLegend: true,
         });
         yAxisSeriesArray.push({
             name: `${indexData.prefName}(推計)`,
             dashStyle: "Dash",
             color,
             data: dashSeriesData,
+            showInLegend: false,
         });
     }
     // 年度昇順でソート
