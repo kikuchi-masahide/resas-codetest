@@ -23,6 +23,7 @@ describe("line-graph.vue", () => {
                         y: 1,
                     },
                 ],
+                showInLegend: true,
             },
         ],
     };
@@ -45,6 +46,7 @@ describe("line-graph.vue", () => {
                         y: 1,
                     },
                 ],
+                showInLegend: true,
             },
             {
                 name: "y軸シリーズ1-1",
@@ -60,6 +62,7 @@ describe("line-graph.vue", () => {
                         y: 3,
                     },
                 ],
+                showInLegend: false,
             },
         ],
     };

@@ -41,6 +41,7 @@ const yAxisSeries = ref(
             x: number;
             y: number;
         }>;
+        showInLegend: boolean;
     }>(),
 );
 
