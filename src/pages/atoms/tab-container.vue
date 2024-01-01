@@ -14,9 +14,9 @@
         <template v-for="prop in props.tabProps">
             <div
                 :id="prop.id"
-                @click="viewModel.tabSelectorOnClick(prop.id)"
+                @click="tabSelectorOnClick(prop.id)"
                 :class="
-                    prop.id === viewModel.currentTabId.value
+                    prop.id === currentTabId
                         ? 'selected'
                         : 'unselected'
                 "
@@ -25,8 +25,8 @@
             </div>
         </template>
     </div>
-    <div class="body" :id="viewModel.currentTabId.value">
-        <slot :name="viewModel.currentTabId.value" />
+    <div class="body" :id="currentTabId">
+        <slot :name="currentTabId" />
     </div>
 </template>
 <style scoped>
@@ -63,9 +63,14 @@
 </style>
 <script setup lang="ts">
 import { onMounted } from "vue";
-import * as viewModel from "./tab-container-view-model";
+import {
+    type DefinePropsType,
+    currentTabId,
+    onMountedFunctor,
+    tabSelectorOnClick,
+} from "./tab-container-view-model";
 
-const props = defineProps<viewModel.DefinePropsType>();
+const props = defineProps<DefinePropsType>();
 
-onMounted(() => viewModel.onMountedFunctor(props));
+onMounted(() => onMountedFunctor(props));
 </script>

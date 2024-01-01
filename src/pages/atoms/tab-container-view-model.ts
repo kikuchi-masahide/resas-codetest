@@ -1,4 +1,4 @@
-import { ref } from "vue";
+import { computed, ref } from "vue";
 
 interface DefinePropsType {
     tabProps: Array<{
@@ -7,15 +7,16 @@ interface DefinePropsType {
     }>;
 }
 
-const currentTabId = ref<string>();
+const currentTabIdRef = ref<string>();
+const currentTabId = computed(() => currentTabIdRef.value);
 
 // onMountedで実行する関数
 const onMountedFunctor = (props: DefinePropsType): void => {
-    currentTabId.value = props.tabProps[0].id;
+    currentTabIdRef.value = props.tabProps[0].id;
 };
 
 const tabSelectorOnClick = (id: string): void => {
-    currentTabId.value = id;
+    currentTabIdRef.value = id;
 };
 
 export {
