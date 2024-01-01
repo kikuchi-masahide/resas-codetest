@@ -12,6 +12,8 @@ export interface PropsType {
             x: number;
             y: number;
         }>;
+        // グラフ下部に凡例を表示するかどうか
+        showInLegend: boolean;
     }>;
 }
 
@@ -31,6 +33,13 @@ export interface GraphOptionsType {
     yAxis: {
         title: {
             text: string;
+        };
+    };
+    plotOptions: {
+        line: {
+            marker: {
+                symbol: "circle";
+            };
         };
     };
     responsive: {
@@ -54,6 +63,7 @@ export interface GraphOptionsType {
         color: string;
         dashStyle: "Solid" | "Dash";
         data: Array<[number, number]>; // [x, y]
+        showInLegend: boolean;
     }>;
 }
 
@@ -71,6 +81,7 @@ export const getGraphOptions = (
             x: number;
             y: number;
         }>;
+        showInLegend: boolean;
     }>,
 ): GraphOptionsType => {
     const series = yAxisSeries.map((series) => {
@@ -79,6 +90,7 @@ export const getGraphOptions = (
             color: series.color,
             dashStyle: series.dashStyle ?? "Solid",
             data: series.data.map<[number, number]>((data) => [data.x, data.y]),
+            showInLegend: series.showInLegend,
         };
     });
     return {
@@ -97,6 +109,13 @@ export const getGraphOptions = (
         yAxis: {
             title: {
                 text: yAxisTitle,
+            },
+        },
+        plotOptions: {
+            line: {
+                marker: {
+                    symbol: "circle",
+                },
             },
         },
         responsive: {
