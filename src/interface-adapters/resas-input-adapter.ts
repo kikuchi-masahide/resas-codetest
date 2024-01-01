@@ -1,14 +1,21 @@
 import type {
     PopulationData,
     PrefectureData,
+    PrefectureIndexData,
 } from "../entities/prefecture-data";
+import * as resasPrefCodes from "./resas-prefcodes.json";
 import type DataInputInterface from "../usecases/data-input-interface";
 
-interface PrefectureCodeResponse {
-    message: null;
-    result: Array<{
+interface ResasPrefCodesJTD {
+    areas: Array<{
+        areaCode: number;
+        areaName: string;
+    }>;
+    prefs: Array<{
         prefCode: number;
         prefName: string;
+        prefNameJP: string;
+        areaCode: number;
     }>;
 }
 
@@ -27,14 +34,26 @@ interface PopulationCompositionPerYearResponse {
 }
 
 export default class RESASInputAdapter implements DataInputInterface {
-    async getPrefectureCodes(): Promise<Map<number, string>> {
-        const response =
-            await this.get<PrefectureCodeResponse>("api/v1/prefectures");
-        const codes = new Map<number, string>();
-        for (const { prefCode, prefName } of response.result) {
-            codes.set(prefCode, prefName);
+    async getPrefectureIndexDatas(): Promise<Map<number, PrefectureIndexData>> {
+        const areaCodeNameMap = new Map<number, string>();
+        for (const { areaCode, areaName } of (
+            resasPrefCodes as ResasPrefCodesJTD
+        ).areas) {
+            areaCodeNameMap.set(areaCode, areaName);
         }
-        return codes;
+        const prefCodeIndexMap = new Map<number, PrefectureIndexData>();
+        for (const { prefCode, prefName, prefNameJP, areaCode } of (
+            resasPrefCodes as ResasPrefCodesJTD
+        ).prefs) {
+            prefCodeIndexMap.set(prefCode, {
+                prefCode,
+                prefName,
+                prefNameJP,
+                areaCode,
+                areaName: areaCodeNameMap.get(areaCode) ?? "",
+            });
+        }
+        return prefCodeIndexMap;
     }
 
     async getPrefectureData(prefectureCode: number): Promise<PrefectureData> {

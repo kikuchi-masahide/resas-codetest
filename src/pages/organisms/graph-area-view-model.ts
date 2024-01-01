@@ -72,7 +72,7 @@ const watchCheckedPrefCodes = async (newValue: number[]): Promise<void> => {
 // checkedPrefCodesとvalueTypeからグラフのデータを取得する
 async function setGraphDatas(): Promise<void> {
     const store = useEntityDataStore();
-    const prefCodes = await store.getPrefectureCodes();
+    const prefIndexDatas = await store.getPrefectureIndexDatas();
     const xAxisCategoriesSet = new Set<number>();
     const yAxisSeriesArray = new Array<{
         name: string;
@@ -85,8 +85,8 @@ async function setGraphDatas(): Promise<void> {
     }>();
 
     for (const code of checkedPrefCodes.value) {
-        const name = prefCodes.get(code);
-        if (name === undefined) {
+        const indexData = prefIndexDatas.get(code);
+        if (indexData === undefined) {
             continue;
         }
         const prefData = await store.getPrefectureData(code);
@@ -138,12 +138,12 @@ async function setGraphDatas(): Promise<void> {
             lineColors.value.set(code, color);
         }
         yAxisSeriesArray.push({
-            name,
+            name: indexData.prefName,
             color,
             data: solidSeriesData,
         });
         yAxisSeriesArray.push({
-            name: `${name}(推計)`,
+            name: `${indexData.prefName}(推計)`,
             dashStyle: "Dash",
             color,
             data: dashSeriesData,

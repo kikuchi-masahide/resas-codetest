@@ -15,4 +15,16 @@ interface PrefectureData {
     elderlyPopulation: Map<number, PopulationData>;
 }
 
-export type { PopulationData, PrefectureData };
+interface PrefectureIndexData {
+    prefCode: number;
+    // 都道府県名(漢字表記)
+    prefName: string;
+    // 都道府県名(カナ表記)
+    prefNameJP: string;
+    // 地方コード
+    areaCode: number;
+    // 地方名
+    areaName: string;
+}
+
+export type { PopulationData, PrefectureData, PrefectureIndexData };

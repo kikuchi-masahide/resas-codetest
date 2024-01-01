@@ -1,0 +1,320 @@
+{
+    "areas": [
+        {
+            "areaCode": 1,
+            "areaName": "北海道地方"
+        },
+        {
+            "areaCode": 2,
+            "areaName": "東北地方"
+        },
+        {
+            "areaCode": 3,
+            "areaName": "関東地方"
+        },
+        {
+            "areaCode": 4,
+            "areaName": "中部地方"
+        },
+        {
+            "areaCode": 5,
+            "areaName": "近畿地方"
+        },
+        {
+            "areaCode": 6,
+            "areaName": "中国地方"
+        },
+        {
+            "areaCode": 7,
+            "areaName": "四国地方"
+        },
+        {
+            "areaCode": 8,
+            "areaName": "九州地方"
+        }
+    ],
+    "prefs": [
+        {
+            "prefCode": 1,
+            "prefName": "北海道",
+            "prefNameJP": "ほっかいどう",
+            "areaCode": 1
+        },
+        {
+            "prefCode": 2,
+            "prefName": "青森県",
+            "prefNameJP": "あおもりけん",
+            "areaCode": 2
+        },
+        {
+            "prefCode": 3,
+            "prefName": "岩手県",
+            "prefNameJP": "いわてけん",
+            "areaCode": 2
+        },
+        {
+            "prefCode": 4,
+            "prefName": "宮城県",
+            "prefNameJP": "みやぎけん",
+            "areaCode": 2
+        },
+        {
+            "prefCode": 5,
+            "prefName": "秋田県",
+            "prefNameJP": "あきたけん",
+            "areaCode": 2
+        },
+        {
+            "prefCode": 6,
+            "prefName": "山形県",
+            "prefNameJP": "やまがたけん",
+            "areaCode": 2
+        },
+        {
+            "prefCode": 7,
+            "prefName": "福島県",
+            "prefNameJP": "ふくしまけん",
+            "areaCode": 2
+        },
+        {
+            "prefCode": 8,
+            "prefName": "茨城県",
+            "prefNameJP": "いばらきけん",
+            "areaCode": 3
+        },
+        {
+            "prefCode": 9,
+            "prefName": "栃木県",
+            "prefNameJP": "とちぎけん",
+            "areaCode": 3
+        },
+        {
+            "prefCode": 10,
+            "prefName": "群馬県",
+            "prefNameJP": "ぐんまけん",
+            "areaCode": 3
+        },
+        {
+            "prefCode": 11,
+            "prefName": "埼玉県",
+            "prefNameJP": "さいたまけん",
+            "areaCode": 3
+        },
+        {
+            "prefCode": 12,
+            "prefName": "千葉県",
+            "prefNameJP": "ちばけん",
+            "areaCode": 3
+        },
+        {
+            "prefCode": 13,
+            "prefName": "東京都",
+            "prefNameJP": "とうきょうと",
+            "areaCode": 3
+        },
+        {
+            "prefCode": 14,
+            "prefName": "神奈川県",
+            "prefNameJP": "かながわけん",
+            "areaCode": 3
+        },
+        {
+            "prefCode": 15,
+            "prefName": "新潟県",
+            "prefNameJP": "にいがたけん",
+            "areaCode": 4
+        },
+        {
+            "prefCode": 16,
+            "prefName": "富山県",
+            "prefNameJP": "とやまけん",
+            "areaCode": 4
+        },
+        {
+            "prefCode": 17,
+            "prefName": "石川県",
+            "prefNameJP": "いしかわけん",
+            "areaCode": 4
+        },
+        {
+            "prefCode": 18,
+            "prefName": "福井県",
+            "prefNameJP": "ふくいけん",
+            "areaCode": 4
+        },
+        {
+            "prefCode": 19,
+            "prefName": "山梨県",
+            "prefNameJP": "やまなしけん",
+            "areaCode": 4
+        },
+        {
+            "prefCode": 20,
+            "prefName": "長野県",
+            "prefNameJP": "ながのけん",
+            "areaCode": 4
+        },
+        {
+            "prefCode": 21,
+            "prefName": "岐阜県",
+            "prefNameJP": "ぎふけん",
+            "areaCode": 4
+        },
+        {
+            "prefCode": 22,
+            "prefName": "静岡県",
+            "prefNameJP": "しずおかけん",
+            "areaCode": 4
+        },
+        {
+            "prefCode": 23,
+            "prefName": "愛知県",
+            "prefNameJP": "あいちけん",
+            "areaCode": 4
+        },
+        {
+            "prefCode": 24,
+            "prefName": "三重県",
+            "prefNameJP": "みえけん",
+            "areaCode": 4
+        },
+        {
+            "prefCode": 25,
+            "prefName": "滋賀県",
+            "prefNameJP": "しがけん",
+            "areaCode": 5
+        },
+        {
+            "prefCode": 26,
+            "prefName": "京都府",
+            "prefNameJP": "きょうとふ",
+            "areaCode": 5
+        },
+        {
+            "prefCode": 27,
+            "prefName": "大阪府",
+            "prefNameJP": "おおさかふ",
+            "areaCode": 5
+        },
+        {
+            "prefCode": 28,
+            "prefName": "兵庫県",
+            "prefNameJP": "ひょうごけん",
+            "areaCode": 5
+        },
+        {
+            "prefCode": 29,
+            "prefName": "奈良県",
+            "prefNameJP": "ならけん",
+            "areaCode": 5
+        },
+        {
+            "prefCode": 30,
+            "prefName": "和歌山県",
+            "prefNameJP": "わかやまけん",
+            "areaCode": 5
+        },
+        {
+            "prefCode": 31,
+            "prefName": "鳥取県",
+            "prefNameJP": "とっとりけん",
+            "areaCode": 6
+        },
+        {
+            "prefCode": 32,
+            "prefName": "島根県",
+            "prefNameJP": "しまねけん",
+            "areaCode": 6
+        },
+        {
+            "prefCode": 33,
+            "prefName": "岡山県",
+            "prefNameJP": "おかやまけん",
+            "areaCode": 6
+        },
+        {
+            "prefCode": 34,
+            "prefName": "広島県",
+            "prefNameJP": "ひろしまけん",
+            "areaCode": 6
+        },
+        {
+            "prefCode": 35,
+            "prefName": "山口県",
+            "prefNameJP": "やまぐちけん",
+            "areaCode": 6
+        },
+        {
+            "prefCode": 36,
+            "prefName": "徳島県",
+            "prefNameJP": "とくしまけん",
+            "areaCode": 7
+        },
+        {
+            "prefCode": 37,
+            "prefName": "香川県",
+            "prefNameJP": "かがわけん",
+            "areaCode": 7
+        },
+        {
+            "prefCode": 38,
+            "prefName": "愛媛県",
+            "prefNameJP": "えひめけん",
+            "areaCode": 7
+        },
+        {
+            "prefCode": 39,
+            "prefName": "高知県",
+            "prefNameJP": "こうちけん",
+            "areaCode": 7
+        },
+        {
+            "prefCode": 40,
+            "prefName": "福岡県",
+            "prefNameJP": "ふくおかけん",
+            "areaCode": 8
+        },
+        {
+            "prefCode": 41,
+            "prefName": "佐賀県",
+            "prefNameJP": "さがけん",
+            "areaCode": 8
+        },
+        {
+            "prefCode": 42,
+            "prefName": "長崎県",
+            "prefNameJP": "ながさきけん",
+            "areaCode": 8
+        },
+        {
+            "prefCode": 43,
+            "prefName": "熊本県",
+            "prefNameJP": "くまもとけん",
+            "areaCode": 8
+        },
+        {
+            "prefCode": 44,
+            "prefName": "大分県",
+            "prefNameJP": "おおいたけん",
+            "areaCode": 8
+        },
+        {
+            "prefCode": 45,
+            "prefName": "宮崎県",
+            "prefNameJP": "みやざきけん",
+            "areaCode": 8
+        },
+        {
+            "prefCode": 46,
+            "prefName": "鹿児島県",
+            "prefNameJP": "かごしまけん",
+            "areaCode": 8
+        },
+        {
+            "prefCode": 47,
+            "prefName": "沖縄県",
+            "prefNameJP": "おきなわけん",
+            "areaCode": 8
+        }
+    ]
+}
