@@ -2,8 +2,18 @@ import { computed, ref } from "vue";
 import useEntityDataStore from "../../usecases/entitiy-data-store";
 import { PrefectureIndexData } from "@/entities/prefecture-data";
 
+// defineEmits<{change: EmitChangeParamerType}>(); のように使う
+type EmitChangeParameterType = [prefCodes: number[]];
+
 const isPrefIndexDatasLoadedRef = ref(false);
 const isPrefIndexDatasLoaded = computed(() => isPrefIndexDatasLoadedRef.value);
+
+const checkedPrefIdsSet = ref(new Set<number>());
+// checkboxPropsCodeOrderの更新はタブ切り替え時行われないがcheckBoxVueは更新されるため、
+// checkboxの入力値参照はこちらを用いる
+const isPrefIdCheckedComputed = (id: number): boolean => {
+    return computed(() => checkedPrefIdsSet.value.has(id)).value;
+};
 
 const checkboxPropsCodeOrder = ref<
     Array<{
@@ -20,20 +30,6 @@ const checkboxPropsCodeOrder = ref<
         >;
     }>
 >([]);
-const checkboxPropsNameOrderAsc1d = ref<
-    Array<{
-        groupId: string;
-        id: number;
-        label: string;
-    }>
->([]);
-
-const checkedPrefIdsSet = ref(new Set<number>());
-// checkboxPropsCodeOrderの更新はタブ切り替え時行われないがcheckBoxVueは更新されるため、
-// checkboxの入力値参照はこちらを用いる
-const isPrefIdCheckedComputed = (id: number): boolean => {
-    return computed(() => checkedPrefIdsSet.value.has(id)).value;
-};
 
 const nameSortOrderDropDownProps = {
     elementId: "name-sort-order",
@@ -49,12 +45,17 @@ const nameSortOrderDropDownProps = {
         },
     ],
 };
-
 const nameSortOrderDropDownValueRef = ref(0);
 const nameSortOrderDropDownValue = computed(
     () => nameSortOrderDropDownValueRef.value,
 );
-
+const checkboxPropsNameOrderAsc1d = ref<
+    Array<{
+        groupId: string;
+        id: number;
+        label: string;
+    }>
+>([]);
 // ４行の表としてcheck-boxを配置するため、
 // checkboxPropsNameOrder1dを4つずつに分割する
 const checkboxPropsNameOrder = computed(() => {
@@ -86,7 +87,6 @@ const checkboxPropsNameOrder = computed(() => {
     }
     return res;
 });
-
 const nameSortOrderDropDownOnChanged = (value: number): void => {
     nameSortOrderDropDownValueRef.value = value;
 };
@@ -94,6 +94,7 @@ const nameSortOrderDropDownOnChanged = (value: number): void => {
 const onMountedFunctor = async (): Promise<void> => {
     const store = useEntityDataStore();
     const prefIdIndexDatas = Array.from(await store.getPrefectureIndexDatas());
+    // checkboxPropsCodeOrderのセットアップ
     // areaCodeごとに分割する
     const prefIdIndexDatasByAreaMap = new Map<
         number,
@@ -133,6 +134,7 @@ const onMountedFunctor = async (): Promise<void> => {
         }
     }
 
+    // checkboxPropsNameOrderAsc1dのセットアップ
     checkboxPropsNameOrderAsc1d.value = prefIdIndexDatas
         .sort((a, b) => {
             if (a[1].prefNameJP < b[1].prefNameJP) {
@@ -164,9 +166,6 @@ const tabContainerTabProps = [
         label: "名前順",
     },
 ];
-
-// defineEmits<{change: EmitChangeParamerType}>(); のように使う
-type EmitChangeParameterType = [prefCodes: number[]];
 
 // check-boxのonChangeでIdを受け取る
 // 返り値はemit('change')するときの引数にする
