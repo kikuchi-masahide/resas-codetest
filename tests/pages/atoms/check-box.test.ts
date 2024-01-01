@@ -24,21 +24,22 @@ describe("check-box.vue", () => {
                 ...props,
             },
         });
-        expect(wrapper0.find("input").attributes("value")).toBe("false");
+        wrapper0.find("input").attributes
+        expect(wrapper0.find("input").element.checked).toBe(false);
         const wrapper1 = mount(checkBoxVue, {
             props:{
                 ...props,
                 checked:false
             },
         });
-        expect(wrapper1.find("input").attributes("value")).toBe("false");
+        expect(wrapper1.find("input").element.checked).toBe(false);
         const wrapper2 = mount(checkBoxVue, {
             props:{
                 ...props,
                 checked:true
             },
         });
-        expect(wrapper2.find("input").attributes("value")).toBe("true");
+        expect(wrapper2.find("input").element.checked).toBe(true);
     });
     it("入力の際@changeがemitされ引数は1になる", () => {
         const wrapper = mount(checkBoxVue, {

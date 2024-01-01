@@ -1,7 +1,7 @@
 <template>
     <input
         :id="elementId"
-        :checked="checked ?? false"
+        :checked="props.checked ?? false"
         type="checkbox"
         @change="emits('change', props.id)"
     />
