@@ -95,22 +95,22 @@ export default class RESASInputAdapter implements DataInputInterface {
         };
     }
 
-    // APIキーを使ってデータを取得する
+    // cacheをチェックした後、必要ならばAPIキーを使ってデータを取得する
     // path: 'api/v1/'から始まるパス
     private async get<T>(path: string): Promise<T> {
+        const cache = await caches.open("resas");
         const url = "https://opendata.resas-portal.go.jp/" + path;
-        const headers = {
-            "X-API-KEY": import.meta.env.VITE_RESAS_API_KEY,
-        };
-        // GET
-        const response = await fetch(url, {
-            method: "GET",
-            headers,
-            mode: "cors",
-        });
-        if (!response.ok) {
-            throw new Error("Failed to fetch");
+        let cachedData = await cache.match(url);
+        if (cachedData === undefined || cachedData.status !== 200) {
+            const headers = {
+                "X-API-KEY": import.meta.env.VITE_RESAS_API_KEY,
+            };
+            await cache.add(new Request(url, { headers, mode: "cors" }));
+            cachedData = await cache.match(url);
+            if (cachedData === undefined || cachedData.status !== 200) {
+                throw new Error("Failed to fetch data");
+            }
         }
-        return (await response.json()) as T;
+        return (await cachedData.json()) as T;
     }
 }
