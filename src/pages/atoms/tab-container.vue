@@ -11,24 +11,35 @@
         </tabContainer>
     -->
     <div class="selectors">
-        <template v-for="prop in props.tabProps">
+        <template v-for="prop in props.tabProps" :key="prop.id">
             <div
                 :id="prop.id"
+                :class="prop.id === currentTabId ? 'selected' : 'unselected'"
                 @click="tabSelectorOnClick(prop.id)"
-                :class="
-                    prop.id === currentTabId
-                        ? 'selected'
-                        : 'unselected'
-                "
             >
                 {{ prop.label }}
             </div>
         </template>
     </div>
-    <div class="body" :id="currentTabId">
+    <div :id="currentTabId" class="body">
         <slot :name="currentTabId" />
     </div>
 </template>
+<script setup lang="ts">
+import { onMounted } from "vue";
+import {
+    type DefinePropsType,
+    currentTabId,
+    onMountedFunctor,
+    tabSelectorOnClick,
+} from "./tab-container-view-model";
+
+const props = defineProps<DefinePropsType>();
+
+onMounted(() => {
+    onMountedFunctor(props);
+});
+</script>
 <style scoped>
 .selected {
     display: inline-block;
@@ -61,16 +72,3 @@
     border-radius: 0 0 0.5rem 0.5rem;
 }
 </style>
-<script setup lang="ts">
-import { onMounted } from "vue";
-import {
-    type DefinePropsType,
-    currentTabId,
-    onMountedFunctor,
-    tabSelectorOnClick,
-} from "./tab-container-view-model";
-
-const props = defineProps<DefinePropsType>();
-
-onMounted(() => onMountedFunctor(props));
-</script>

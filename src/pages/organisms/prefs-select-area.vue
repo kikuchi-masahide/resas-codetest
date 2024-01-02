@@ -3,12 +3,13 @@
     <div v-if="!viewModel.isPrefIndexDatasLoaded">
         <p>都道府県コードを読み込み中です</p>
     </div>
-    <tabContainer v-else :tabProps="viewModel.tabContainerTabProps">
-        <template v-slot:code-order>
+    <tabContainer v-else :tab-props="viewModel.tabContainerTabProps">
+        <template #code-order>
             <div class="code-order-slot">
                 <template
                     v-for="{ areaName, table } in viewModel
                         .checkboxPropsCodeOrder.value"
+                    :key="areaName"
                 >
                     <h2 class="area-name">{{ areaName }}</h2>
                     <hr />
@@ -47,7 +48,7 @@
                 </template>
             </div>
         </template>
-        <template v-slot:name-order>
+        <template #name-order>
             <dropDown
                 v-bind="viewModel.nameSortOrderDropDownProps"
                 @change="viewModel.nameSortOrderDropDownOnChanged"

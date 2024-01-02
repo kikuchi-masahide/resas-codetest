@@ -7,7 +7,7 @@
     />
     <lineGraph
         title="人口構成推移図"
-        x-axis-title="年"
+        x-axis-title="年度"
         :x-axis-categories="xAxisCategories"
         y-axis-title="人口数"
         :y-axis-series="yAxisSeries"

@@ -28,5 +28,7 @@
         "parser": "@typescript-eslint/parser"
     },
     "plugins": ["vue", "@typescript-eslint"],
-    "rules": {}
+    "rules": {
+        "semi": ["error", "always"] // Add this line to enforce semicolons at the end of each statement
+    }
 }

@@ -1,6 +1,6 @@
 import { computed, ref } from "vue";
 import useEntityDataStore from "../../usecases/entitiy-data-store";
-import { PrefectureIndexData } from "@/entities/prefecture-data";
+import { type PrefectureIndexData } from "@/entities/prefecture-data";
 
 // defineEmits<{change: EmitChangeParamerType}>(); のように使う
 type EmitChangeParameterType = [prefCodes: number[]];
@@ -78,7 +78,7 @@ const checkboxPropsNameOrder = computed(() => {
         ) {
             back.push(
                 checkboxPropsNameOrderAsc1d.value[
-                    nameSortOrderDropDownValueRef.value == 0
+                    nameSortOrderDropDownValueRef.value === 0
                         ? index
                         : wholeLen - index - 1
                 ],
@@ -98,7 +98,7 @@ const onMountedFunctor = async (): Promise<void> => {
     // areaCodeごとに分割する
     const prefIdIndexDatasByAreaMap = new Map<
         number,
-        [number, PrefectureIndexData][]
+        Array<[number, PrefectureIndexData]>
     >();
     for (const indexData of prefIdIndexDatas) {
         if (!prefIdIndexDatasByAreaMap.has(indexData[1].areaCode)) {

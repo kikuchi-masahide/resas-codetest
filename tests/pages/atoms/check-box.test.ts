@@ -18,38 +18,39 @@ describe("check-box.vue", () => {
             `${props.groupId}#${props.id}`,
         );
     });
-    it("propsのcheckedの指定が正しく反映されている",()=>{
+    it("propsのcheckedの指定が正しく反映されている", () => {
         const wrapper0 = mount(checkBoxVue, {
-            props:{
+            props: {
                 ...props,
             },
         });
-        wrapper0.find("input").attributes
         expect(wrapper0.find("input").element.checked).toBe(false);
         const wrapper1 = mount(checkBoxVue, {
-            props:{
+            props: {
                 ...props,
-                checked:false
+                checked: false,
             },
         });
         expect(wrapper1.find("input").element.checked).toBe(false);
         const wrapper2 = mount(checkBoxVue, {
-            props:{
+            props: {
                 ...props,
-                checked:true
+                checked: true,
             },
         });
         expect(wrapper2.find("input").element.checked).toBe(true);
     });
-    it("入力の際@changeがemitされ引数は1になる", () => {
+    it("入力の際@changeがemitされ引数が1になる", async () => {
         const wrapper = mount(checkBoxVue, {
             props,
         });
         // off -> on
-        wrapper.find("input").trigger("change");
-        expect(wrapper.emitted("change")).toMatchObject([[1]]);
+        await wrapper.find("input").trigger("change");
+        expect(wrapper.emitted("change")?.length).toBe(1);
+        expect(wrapper.emitted("change")?.[0]).toEqual([1]);
         // on -> off
-        wrapper.find("input").trigger("change");
-        expect(wrapper.emitted("change")).toMatchObject([[1], [1]]);
+        await wrapper.find("input").trigger("change");
+        expect(wrapper.emitted("change")?.length).toBe(2);
+        expect(wrapper.emitted("change")?.[1]).toEqual([1]);
     });
 });
