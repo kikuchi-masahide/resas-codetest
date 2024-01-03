@@ -1,6 +1,6 @@
-import { computed, ref } from "vue";
-import useEntityDataStore from "../../usecases/entitiy-data-store";
+import { computed, inject, ref } from "vue";
 import { type PrefectureIndexData } from "@/entities/prefecture-data";
+import entityDataStoreKey from "@/entity-data-store-key";
 
 // defineEmits<{change: EmitChangeParamerType}>(); のように使う
 type EmitChangeParameterType = [prefCodes: number[]];
@@ -92,7 +92,10 @@ const nameSortOrderDropDownOnChanged = (value: number): void => {
 };
 
 const onMountedFunctor = async (): Promise<void> => {
-    const store = useEntityDataStore();
+    const store = inject(entityDataStoreKey);
+    if (store === undefined) {
+        throw new Error("Entity data store not found");
+    }
     const prefIdIndexDatas = Array.from(await store.getPrefectureIndexDatas());
     // checkboxPropsCodeOrderのセットアップ
     // areaCodeごとに分割する
