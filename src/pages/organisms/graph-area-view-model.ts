@@ -1,10 +1,20 @@
-import { ref } from "vue";
-import useEntityDataStore from "../../usecases/entitiy-data-store";
+import { inject, ref } from "vue";
 import { type PopulationData } from "../../entities/prefecture-data";
+import entityDataStoreKey from "@/entity-data-store-key";
+import type EntityDataStore from "@/usecases/entitiy-data-store";
 
 interface DefinePropsType {
     checkedPrefCodes: number[];
 }
+
+let store: undefined | EntityDataStore;
+
+const onMountedFunctor = (): void => {
+    store = inject(entityDataStoreKey);
+    if (store === undefined) {
+        throw new Error("Entity data store not found");
+    }
+};
 
 // 表示する値のタイプ(総人口/年少人口/生産年齢人口/老年人口)
 type ValueType = "total" | "young" | "working" | "elderly";
@@ -72,7 +82,9 @@ const watchCheckedPrefCodes = async (newValue: number[]): Promise<void> => {
 
 // checkedPrefCodesとvalueTypeからグラフのデータを取得する
 async function setGraphDatas(): Promise<void> {
-    const store = useEntityDataStore();
+    if (store === undefined) {
+        throw new Error("Entity data store not found");
+    }
     const prefIndexDatas = await store.getPrefectureIndexDatas();
     const xAxisCategoriesSet = new Set<number>();
     const yAxisSeriesArray = new Array<{
@@ -161,6 +173,7 @@ async function setGraphDatas(): Promise<void> {
 }
 
 export {
+    onMountedFunctor,
     type DefinePropsType,
     valueTypeDropboxItems,
     xAxisCategories,

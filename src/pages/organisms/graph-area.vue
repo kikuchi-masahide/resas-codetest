@@ -14,10 +14,11 @@
     />
 </template>
 <script setup lang="ts">
-import { watch } from "vue";
+import { onMounted, watch } from "vue";
 import dropDown from "../atoms/drop-down.vue";
 import lineGraph from "../atoms/line-graph.vue";
 import {
+    onMountedFunctor,
     type DefinePropsType,
     valueTypeDropboxItems,
     xAxisCategories,
@@ -29,4 +30,6 @@ import {
 const props = defineProps<DefinePropsType>();
 
 watch(() => props.checkedPrefCodes, watchCheckedPrefCodes);
+
+onMounted(onMountedFunctor);
 </script>
